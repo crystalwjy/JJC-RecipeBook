@@ -1,6 +1,7 @@
 public class Recipe{
     private int id;
     private String name;
+    private String description;
     private String[] ingredients;
     private String[] instructions;
 
@@ -11,6 +12,7 @@ public class Recipe{
     public Recipe(int id, String name, String[] ingredients, String[] instructions){
         this.id=id;
         this.name=name;
+        this.description=description;
         this.ingredients=ingredients;
         this.instructions=instructions;
     }
@@ -31,6 +33,16 @@ public class Recipe{
         this.name = name;
     }
 
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
     public String[] getIngredients() {
         return this.ingredients;
     }
@@ -50,6 +62,8 @@ public class Recipe{
     public void printAll(){
          System.out.println("Recipe Name: ");
          System.out.println(this.name);
+         System.out.println("Recipe Description: ");
+         System.out.println(this.description);
          System.out.println("Recipe Ingredients: ");
          for(String i: this.ingredients){
             System.out.println(this.i);
