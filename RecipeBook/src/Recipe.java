@@ -65,13 +65,11 @@ public class Recipe{
          System.out.println("Recipe Description: ");
          System.out.println(this.description);
          System.out.println("Recipe Ingredients: ");
-         for(String i: this.ingredients){
-            System.out.println(this.i);
-         }
+         for(String i: this.ingredients)
+            System.out.println(i);
          System.out.println("Recipe Instructions: ");
-         for(String i: this.instructions){
-             System.out.println(this.i);
-         }
+         for(String i: this.instructions)
+             System.out.println(i);
 
     }
 
