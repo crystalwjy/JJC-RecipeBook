@@ -2,6 +2,7 @@ public class Recipe{
     private int id;
     private String name;
     private String description;
+    private Boolean favorite;
     private String[] ingredients;
     private String[] instructions;
 
@@ -12,6 +13,7 @@ public class Recipe{
     public Recipe(int id, String name, String[] ingredients, String[] instructions){
         this.id=id;
         this.name=name;
+        this.favorite=favorite;
         this.description=description;
         this.ingredients=ingredients;
         this.instructions=instructions;
@@ -31,6 +33,19 @@ public class Recipe{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public Boolean isFavorite() {
+        return this.favorite;
+    }
+
+    public Boolean getFavorite() {
+        return this.favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 
 
