@@ -1,15 +1,18 @@
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
-//import org.json.JSONArray;
-//import org.json.JSONObject;
-import org.json.simple.parser.*;
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 public class RecipeBook {
+    public static ArrayList<Recipe> recipeBook=new ArrayList<Recipe>();
     public static void main(String[] args) throws Exception {
 
         /*
@@ -48,9 +51,61 @@ public class RecipeBook {
                                    "'e' or 'exit' to exit the recipe book");
             }
 
-            if (input.equals("e") || input.equals("")){
+            // exit 
+            if (input.equals("e") || input.equals("exit")){
                 System.exit(0);
             }
+
+            // browse recipe
+            if(input.equals("b") || input.equals("browse")){
+                System.out.println("Please enter the recipe number from the list");
+                for(int i=0;i<recipeBook.size();i++){
+                    System.out.println((i+1)+". "+recipeBook.get(i).getName());
+                }
+            }
+
+            // search recipe
+            if(input.equals("s") || input.equals("search")){
+
+            }
+
+            // add recipe
+            if(input.equals("a") || input.equals("add")){
+                System.out.println("Please enter recipe name: ");
+                String rname=in.nextLine();
+
+                System.out.println("Please enter recipe description: ");
+                String rdescription=in.nextLine();
+
+                System.out.println("Please enter recipe ingredients. Press enter after each ingredient and type 'done' when you are finished.");
+                String ringredients="";
+                String next="";
+                while(next!="done"){
+                    next=in.nextLine();
+                    if(next.equals("done")){
+                        break;
+                    }
+                    ringredients+=next+"\n";
+                }
+                String[] ingredientsArr=ringredients.split("\n");
+
+                System.out.println("Please enter recipe instructions. Press enter after each instruction and type 'done' when you are finished.");
+                String rinstructions="";
+                next="";
+                int index=1;
+                while(!next.equals("done")){
+                    next=in.nextLine();
+                    if(next.equals("done")){
+                        break;
+                    }
+                    rinstructions+=String.format("%d.%s\n",index,next);
+                }
+                String[] instructionsArr=rinstructions.split("\n");
+
+            }
+
+            // random recipe
+
         }
     }
 
@@ -61,7 +116,7 @@ public class RecipeBook {
 
         int length = book.length();
         for (int i = 0; i<length; i++){
-
+            parseRecipe((JSONObject)book.get(i));
         }
     }
 
@@ -85,3 +140,4 @@ public class RecipeBook {
 
     }
 }
+
