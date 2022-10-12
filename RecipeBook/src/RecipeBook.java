@@ -11,38 +11,22 @@ import org.json.simple.parser.*;
 public class RecipeBook {
     public static ArrayList<Recipe> recipeBook=new ArrayList<Recipe>();
     public static void main(String[] args) throws Exception {
-
+        read_json("Recipes.json");
         /*
         Testing JSON
-        JSONObject jo = new JSONObject("{\"abc\": \"def\" }");
-        System.out.println(jo.toString());
-         */
-
-
         // parsing file "JSONExample.json"
         Object array = new JSONParser().parse(new FileReader("Recipes.json"));
-
         // typecasting obj to JSONObject
-        JSONArray jo = (JSONArray) array;
-
+        JSONArray recipes = (JSONArray) array;
         // getting firstName and lastName
-
-
-        int length = jo.size();
+        int length = recipes.size();
         for (int i = 0; i < length; i++){
-            JSONObject recipe = (JSONObject) jo.get(i);
+            JSONObject recipe = (JSONObject) recipes.get(i);
             String name = (String) recipe.get("name");
-
             System.out.println(name);
         }
+         */
 
-
-
-
-
-
-        //FileReader file = new FileReader("Recipes.json");
-        //JSONTokener token = new JSONTokener(file);
 
 
         // building recipe book form recipes in recipes.json
@@ -130,44 +114,41 @@ public class RecipeBook {
 
             // random recipe
 
-        }
+        }*/
     }
 
     public static void read_json(String filename) throws FileNotFoundException, IOException, ParseException {
 
-        Object obj = new JSONParser().parse(new FileReader(filename));
-        JSONArray book = (JSONArray) obj;
+        Object array = new JSONParser().parse(new FileReader(filename));
+        // typecasting obj to JSONArray
+        JSONArray recipes = (JSONArray) array;
+        int length = recipes.size();
+        for (int i = 0; i < length; i++){
+            JSONObject recipe = (JSONObject) recipes.get(i);
+            // getting "ingredient" elements from JSON file and putting them into an array
+            JSONArray jsonIngredients = (JSONArray) recipe.get("ingredients");
+            String [] ingredients = new String[jsonIngredients.size()];
+            for (int j = 0; j<ingredients.length; j++)
+                ingredients[j] = (String) jsonIngredients.get(j);
+            // getting "instructions" elements from JSON file and putting them into an array
+            JSONArray jsonInstructions = (JSONArray) recipe.get("instructions");
+            String instructions[] = new String[jsonInstructions.size()];
+            for (int j = 0; j<instructions.length; j++)
+                instructions[j] = (String) jsonInstructions.get(j);
 
-        int length = book.length();
-        for (int i = 0; i<length; i++){
-            parseRecipe((JSONObject)book.get(i));
+            // getting recipe name and description
+            Object recipeName = recipe.get("name");
+            System.out.println(recipeName);
+            Object recipeDescription = recipe.get("description");
+            //String name = (String) recipe.get("name");
+            //System.out.println(name);
         }
 
     }
 
-    public static void parseRecipe(JSONObject recipe){
-
-        // getting "ingredient" elements from JSON file and putting them into an array
-        JSONArray jsonIngredients = (JSONArray) recipe.get("ingredients");
-        String [] ingredients = new String[jsonIngredients.length()];
-        for (int i = 0; i<ingredients.length; i++)
-            ingredients[i] = (String) jsonIngredients.get(i);
-
-        // getting "instructions" elements from JSON file and putting them into an array
-        JSONArray jsonInstructions = (JSONArray) recipe.get("instructions");
-        String instructions[] = new String[jsonInstructions.length()];
-        for (int i = 0; i<instructions.length; i++)
-            instructions[i] = (String) jsonInstructions.get(i);
-
-        // getting recipe name and description
-        Object recipeName = recipe.get("name");
-        Object recipeDescription = recipe.get("description");
-
-    }
-    */
 
 
 
 
-}}
+}
 
