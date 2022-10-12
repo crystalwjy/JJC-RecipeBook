@@ -80,6 +80,24 @@ public class RecipeBook {
                     }
                 }
             }
+
+            // printing instructions
+            if(input.equalsIgnoreCase("i")) {
+                if (recipeIndex == 1000) {
+                    System.out.println("Oops. There are no instructions for you because you haven't chosen a recipe yet.");
+                    continue;
+                }
+
+                System.out.println("Step by step view. Hit enter to view the next instruction.");
+                //print the next step
+                // while (in.nextLine().isEmpty() && currentStep < recipe_book.get(recipeIndex).getInstructions().length){
+                while ((recipe_book.get(recipeIndex).getInstructions().length > currentStep) && in.nextLine().isEmpty() ){
+                    System.out.println(recipe_book.get(recipeIndex).getInstructions()[currentStep]);
+                    currentStep++;
+                }
+                System.out.println("End of recipe instructions. Type 'h' or 'help' for a list of commands");
+
+            }
             // adding new recipe
             if (in.equals("3")) {
                 System.out.println("What is the recipe name?");
