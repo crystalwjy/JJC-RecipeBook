@@ -82,7 +82,7 @@ public class RecipeBook {
             }
 
             // printing instructions
-            if(input.equalsIgnoreCase("i")) {
+            if(input.equalsIgnoreCase("v")) {
                 if (recipeIndex == 1000) {
                     System.out.println("Oops. There are no instructions for you because you haven't chosen a recipe yet.");
                     continue;
@@ -95,7 +95,7 @@ public class RecipeBook {
                     System.out.println(recipe_book.get(recipeIndex).getInstructions()[currentStep]);
                     currentStep++;
                 }
-                System.out.println("End of recipe instructions. Type 'h' or 'help' for a list of commands");
+                System.out.println("End of recipe instructions. Type 'm' or 'menu' for a list of commands");
 
             }
             // adding new recipe
@@ -133,7 +133,7 @@ public class RecipeBook {
                     i++;
                 }
                 String[] instructionsArray = instructions.split("\n");
-                System.out.println("Success! Type 'h' or 'help' to return to the help menu.");
+                System.out.println("Success! Type 'm' or 'menu' to return to the help menu.");
 
                 addRecipe(name, description, ingredientsArray, instructionsArray, "Recipes.json");
 
@@ -141,6 +141,14 @@ public class RecipeBook {
                 recipe_book = new ArrayList<Recipe>();
 
                 readJson("Recipes.json"); //read again because of the new updates
+            }
+
+            // searching recipes
+            if (input.equalsIgnoreCase("s")){
+                System.out.println("Enter the recipe you would like to search for:");
+                String search = in.nextLine();
+
+
             }
         }
     }

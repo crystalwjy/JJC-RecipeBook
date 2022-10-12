@@ -9,7 +9,7 @@ public class Recipe{
 
     }
 
-    public Recipe(int id, String name, String[] ingredients, String[] instructions){
+    public Recipe(String name, String description, String[] ingredients, String[] instructions){
         this.id=id;
         this.name=name;
         this.description=description;
