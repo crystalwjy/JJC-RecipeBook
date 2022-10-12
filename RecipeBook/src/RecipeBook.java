@@ -43,8 +43,6 @@ public class RecipeBook {
                 System.out.println("'b' or 'browse' to browse all recipes\n" +
                                    "'s' or 'search' to search for a recipe\n" +
                                    "'a' or 'add' to add a new recipe\n" +
-                                   "'r' or 'random' to get a recipe\n" +
-                                   "'f' or 'favorite' to get your favorite recipe list\n" +
                                    "'e' or 'exit' to exit the recipe book");
             }
 
@@ -135,8 +133,6 @@ public class RecipeBook {
                 String[] instructionsArr=rinstructions.split("\n");
 
             }
-
-            // random recipe
 
         }
     }
