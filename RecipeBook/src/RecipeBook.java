@@ -2,11 +2,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
+import me.xdrop.fuzzywuzzy.*;
+import me.xdrop.fuzzywuzzy.model.*;
 
 public class RecipeBook {
     public static ArrayList<Recipe> recipeBook=new ArrayList<Recipe>();
@@ -28,21 +31,11 @@ public class RecipeBook {
          */
 
 
-
-        // building recipe book form recipes in recipes.json
-        //read_json("./Recipes.json");
-
-        // current recipe being read
-        int recipeIndex = 1000;
-
-        // current step in ingredients
-        int currentStep = 0;
-
         // user input in terminal (could try transferring this in a window using swing or javafx
         Scanner in = new Scanner(System.in);
-        System.out.println("Welcome: Type 'm' or 'menu' to go to main menu");
+        System.out.println("Welcome to your Recipe Book! Type 'm' or 'menu' to go to main menu");
 
-        /*while (true){
+        while (true){
             String input = in.nextLine();
 
             // menu
@@ -71,10 +64,41 @@ public class RecipeBook {
 
             // search recipe
             if(input.equals("s") || input.equals("search")){
-                System.out.println("Enter the recipe you'd like to search for: ");
+                //System.out.println(recipeBook);
+                System.out.println("Search for a recipe:");
                 String searchLine = in.nextLine();
+                ArrayList<String> recipeNames = new ArrayList<String>();
+                for (Recipe r : recipeBook) {
+                    recipeNames.add(r.getName());
+                }
+                List<ExtractedResult> resultList = FuzzySearch.extractTop(searchLine, recipeNames, 2);
 
-
+                for (int i = 0; i < resultList.size(); i++) {
+                    String index = Integer.toString(i + 1);
+                    System.out.println(index + ". " + resultList.get(i).getString());
+                }
+                int searchIndex = 0;
+                System.out.println("Select a number:");
+                String number = in.nextLine();
+                while(true){
+                    try {
+                        searchIndex = Integer.parseInt(number) - 1;
+                        //print entire recipe
+                        for (Recipe r: recipeBook) {
+                            if (r.getName().equals(resultList.get(searchIndex).getString())) {
+                                r.printAll();
+                            }
+                        }
+                        System.out.println("Bon Appetit!");
+                        break;
+                    }
+                    catch (NumberFormatException ex){
+                        System.out.println("Error. Please enter a number.");
+                    }
+                    catch (IndexOutOfBoundsException ex){
+                        System.out.println("Error. Please enter a listed number.");
+                    }
+                }
             }
 
             // add recipe
@@ -114,7 +138,7 @@ public class RecipeBook {
 
             // random recipe
 
-        }*/
+        }
     }
 
     public static void read_json(String filename) throws FileNotFoundException, IOException, ParseException {
@@ -138,8 +162,18 @@ public class RecipeBook {
 
             // getting recipe name and description
             Object recipeName = recipe.get("name");
-            System.out.println(recipeName);
+            //System.out.println(recipeName);
             Object recipeDescription = recipe.get("description");
+            Boolean favorite = false;
+            if(recipe.get("favorite") != null){
+                favorite = true;
+            }
+            Recipe new_recipe = new Recipe(
+                    (String) recipe.get("name"),
+                    (String) recipe.get("description"),
+                    ingredients, instructions, favorite);
+            recipeBook.add(new_recipe);
+            //System.out.println(recipeBook);
             //String name = (String) recipe.get("name");
             //System.out.println(name);
         }

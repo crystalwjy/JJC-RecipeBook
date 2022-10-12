@@ -10,8 +10,9 @@ public class Recipe{
 
     }
 
-    public Recipe(int id, String name, String[] ingredients, String[] instructions){
-        this.id=id;
+
+
+    public Recipe(String name, String description, String[] ingredients, String[] instructions, boolean favorite) {
         this.name=name;
         this.favorite=favorite;
         this.description=description;
