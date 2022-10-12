@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
 
 public class RecipeBook {
     public static ArrayList<Recipe> recipeBook=new ArrayList<Recipe>();
@@ -21,8 +18,31 @@ public class RecipeBook {
         System.out.println(jo.toString());
          */
 
-        FileReader file = new FileReader("Recipes.json");
-        JSONTokener token = new JSONTokener(file);
+
+        // parsing file "JSONExample.json"
+        Object array = new JSONParser().parse(new FileReader("Recipes.json"));
+
+        // typecasting obj to JSONObject
+        JSONArray jo = (JSONArray) array;
+
+        // getting firstName and lastName
+
+
+        int length = jo.size();
+        for (int i = 0; i < length; i++){
+            JSONObject recipe = (JSONObject) jo.get(i);
+            String name = (String) recipe.get("name");
+
+            System.out.println(name);
+        }
+
+
+
+
+
+
+        //FileReader file = new FileReader("Recipes.json");
+        //JSONTokener token = new JSONTokener(file);
 
 
         // building recipe book form recipes in recipes.json
@@ -38,7 +58,7 @@ public class RecipeBook {
         Scanner in = new Scanner(System.in);
         System.out.println("Welcome: Type 'm' or 'menu' to go to main menu");
 
-        while (true){
+        /*while (true){
             String input = in.nextLine();
 
             // menu
@@ -58,6 +78,7 @@ public class RecipeBook {
 
             // browse recipe
             if(input.equals("b") || input.equals("browse")){
+
                 System.out.println("Please enter the recipe number from the list");
                 for(int i=0;i<recipeBook.size();i++){
                     System.out.println((i+1)+". "+recipeBook.get(i).getName());
@@ -66,6 +87,9 @@ public class RecipeBook {
 
             // search recipe
             if(input.equals("s") || input.equals("search")){
+                System.out.println("Enter the recipe you'd like to search for: ");
+                String searchLine = in.nextLine();
+
 
             }
 
@@ -118,6 +142,7 @@ public class RecipeBook {
         for (int i = 0; i<length; i++){
             parseRecipe((JSONObject)book.get(i));
         }
+
     }
 
     public static void parseRecipe(JSONObject recipe){
@@ -139,5 +164,10 @@ public class RecipeBook {
         Object recipeDescription = recipe.get("description");
 
     }
-}
+    */
+
+
+
+
+}}
 
