@@ -1,0 +1,90 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+public class Recipe {
+    private int id;
+    private String name;
+    private String description;
+    private String[] ingredients;
+    private String[] instructions;
+
+    public Recipe() {
+    }
+
+    public Recipe(String name, String description, String[] ingredients, String[] instructions) {
+        this.id = this.id;
+        this.name = name;
+        this.description = description;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String[] getIngredients() {
+        return this.ingredients;
+    }
+
+    public void setIngredients(String[] ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public String[] getInstructions() {
+        return this.instructions;
+    }
+
+    public void setInstructions(String[] instructions) {
+        this.instructions = instructions;
+    }
+
+    public void printAll() {
+        System.out.println("Recipe Name: ");
+        System.out.println(this.name);
+        System.out.println("Recipe Description: ");
+        System.out.println(this.description);
+        System.out.println("Recipe Ingredients: ");
+        String[] var1 = this.ingredients;
+        int var2 = var1.length;
+
+        int var3;
+        String i;
+        for(var3 = 0; var3 < var2; ++var3) {
+            i = var1[var3];
+            System.out.println(i);
+        }
+
+        System.out.println("Recipe Instructions: ");
+        var1 = this.instructions;
+        var2 = var1.length;
+
+        for(var3 = 0; var3 < var2; ++var3) {
+            i = var1[var3];
+            System.out.println(i);
+        }
+
+    }
+}
