@@ -101,7 +101,7 @@ public class RecipeBook {
             }
 
             // search recipe
-            if(input.equals("s") || input.equals("search")){
+            if(input.equalsIgnoreCase("s") || input.equalsIgnoreCase("search")){
                 //System.out.println(recipeBook);
                 System.out.println("Search for a recipe:");
                 String searchLine = in.nextLine();
@@ -127,7 +127,7 @@ public class RecipeBook {
                                 r.printAll();
                             }
                         }
-                        System.out.println("Bon Appetit!");
+                        System.out.println("Bon Appetit! Type 'm' or 'menu' to return to menu.");
                         break;
                     }
                     catch (NumberFormatException ex){
@@ -140,7 +140,7 @@ public class RecipeBook {
             }
 
             // add recipe
-            if(input.equals("a") || input.equals("add")){
+            if(input.equalsIgnoreCase("a") || input.equalsIgnoreCase("add")){
                 System.out.println("Please enter recipe name: ");
                 String rname=in.nextLine();
 
@@ -150,28 +150,39 @@ public class RecipeBook {
                 System.out.println("Please enter recipe ingredients. Press enter after each ingredient and type 'done' when you are finished.");
                 String ringredients="";
                 String next="";
-                while(next!="done"){
+                while(!next.equals("done"){
                     next=in.nextLine();
-                    if(next.equals("done")){
+                    if(next.equals("done"))
                         break;
-                    }
+                    
                     ringredients+=next+"\n";
                 }
                 String[] ingredientsArr=ringredients.split("\n");
 
+                // instructions
                 System.out.println("Please enter recipe instructions. Press enter after each instruction and type 'done' when you are finished.");
                 String rinstructions="";
                 next="";
                 int index=1;
                 while(!next.equals("done")){
                     next=in.nextLine();
-                    if(next.equals("done")){
+                    if(next.equals("done"))
                         break;
-                    }
+                        
                     rinstructions+=String.format("%d.%s\n",index,next);
+                    index++;
                 }
                 String[] instructionsArr=rinstructions.split("\n");
+                      
+                System.out.println("Type 'm' or 'menu' to return to menu.");
+                      
+                addRecipe(name, description, ingredientsArray, instructionsArray, "src/Recipes.json");
 
+                // clearing recipe_book for new recipes
+                recipeBook = new ArrayList<Recipe>();
+
+                // reading again because of the new updates
+                read_Json("src/Recipes.json");
             }
 
         }
@@ -214,6 +225,74 @@ public class RecipeBook {
             //System.out.println(name);
         }
 
+    }
+                      
+    public static void addRecipe(String name, String description, String[] ingredients, String[] instructions, String filename) throws FileNotFoundException, IOException, ParseException {
+        FileWriter outFile = null;
+
+        Object obj = new JSONParser().parse(new FileReader(filename));
+        JSONArray book = (JSONArray) obj;
+
+        //new entry
+        JSONObject entry = new JSONObject();
+        entry.put("name", name);
+        entry.put("description",description);
+
+        // Taking care of the arrays
+        JSONArray jsonIngredients = new JSONArray();
+
+        for (int i = 0; i < ingredients.length; i++)
+            jsonIngredients.add(ingredients[i]);
+
+        JSONArray jsonInstructions = new JSONArray();
+
+        for (int i = 0; i < instructions.length; i++)
+            jsonInstructions.add(instructions[i]);
+
+        // Putting the last key-value pairs together
+        entry.put("ingredients", jsonIngredients);
+        entry.put("instructions", jsonInstructions);
+
+        book.add(entry);
+
+        System.out.println(book.toString());
+
+        try{
+            // Constructs a FileWriter given a file name, using the platform's default charset
+            outFile = new FileWriter(filename);
+            outFile.write(book.toString());
+
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        finally {
+            outFile.flush();
+            outFile.close();
+        }
+    }
+      
+    // method for parsing recipe
+    public static void parseRecipe(JSONObject recipe)  {
+            // getting "ingredient" elements from JSON file and putting them into an array
+            JSONArray jsonIngredients = (JSONArray) recipe.get("ingredients");
+            String [] ingredients = new String[jsonIngredients.size()];
+            for (int i = 0; i<ingredients.length; i++)
+                ingredients[i] = (String) jsonIngredients.get(i);
+
+            // getting "instructions" elements from JSON file and putting them into an array
+            JSONArray jsonInstructions = (JSONArray) recipe.get("instructions");
+            String instructions[] = new String[jsonInstructions.size()];
+            for (int i = 0; i<instructions.length; i++)
+                instructions[i] = (String) jsonInstructions.get(i);
+
+            // getting recipe name and description
+            Object recipeName = recipe.get("name");
+            Object recipeDescription = recipe.get("description");
+
+            Recipe newRecipe = new Recipe((String) recipeName, (String) recipeDescription, ingredients, instructions);
+
+            recipeBook.add(newRecipe);
     }
 
 
