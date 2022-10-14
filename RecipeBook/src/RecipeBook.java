@@ -8,8 +8,8 @@ import org.json.simple.parser.*;
 
 public class RecipeBook {
     public static ArrayList<Recipe> recipeBook=new ArrayList<Recipe>();
+    
     public static void main(String[] args) throws Exception {
-        read_json("Recipes.json");
         /*
         Testing JSON
         // parsing file "JSONExample.json"
@@ -25,7 +25,16 @@ public class RecipeBook {
         }
          */
 
+        // reads json file
+        read_json("src/Recipes.json");
 
+        
+        // current recipe being read
+        int recipeIndex = 1000;
+
+        // current step in ingredients
+        int currentStep = 0;
+        
         // user input in terminal (could try transferring this in a window using swing or javafx
         Scanner in = new Scanner(System.in);
         System.out.println("Welcome to your Recipe Book! Type 'm' or 'menu' to go to main menu");
@@ -34,7 +43,7 @@ public class RecipeBook {
             String input = in.nextLine();
 
             // menu
-            if (input.equals("m") || input.equals("menu")){
+            if (input.equalsIgnoreCase("m") || input.equalsIgnoreCase("menu")){
                 System.out.println("'b' or 'browse' to browse all recipes\n" +
                                    "'s' or 'search' to search for a recipe\n" +
                                    "'a' or 'add' to add a new recipe\n" +
@@ -42,17 +51,53 @@ public class RecipeBook {
             }
 
             // exit 
-            if (input.equals("e") || input.equals("exit")){
+            if(input.equalsIgnoreCase("e") || input.equalsIgnoreCase("exit")) {
                 System.exit(0);
             }
 
             // browse recipe
-            if(input.equals("b") || input.equals("browse")){
-
+            if(input.equalsIgnoreCase("b")||input.equalsIgnoreCase("browse")) {
                 System.out.println("Please enter the recipe number from the list");
                 for(int i=0;i<recipeBook.size();i++){
                     System.out.println((i+1)+". "+recipeBook.get(i).getName());
                 }
+                
+                while(true) {
+                    try {
+                        recipeIndex = Integer.parseInt(in.nextLine()) - 1;
+                        currentStep = 0;
+
+                        //printing recipe
+                        recipeBook.get(recipeIndex).printAll();
+
+                        System.out.println("\nType 'v' to view instructions or 'm' to return to menu.");
+                        break;
+                    }
+                    catch (NumberFormatException ex){
+                        System.out.println("Error: Please enter a valid number.");
+                    }
+                    catch (IndexOutOfBoundsException ex){
+                        System.out.println("Error: Please enter a recipe number that is listed.");
+                    }
+                }
+            }
+            
+            // printing instructions
+            if(input.equalsIgnoreCase("v")) {
+                if (recipeIndex == 1000) {
+                    System.out.println("Oops. There are no instructions for you because you haven't chosen a recipe yet.");
+                    continue;
+                }
+
+                System.out.println("Step by step view. Hit enter to view the next instruction.");
+                //print the next step
+                // while (in.nextLine().isEmpty() && currentStep < recipe_book.get(recipeIndex).getInstructions().length){
+                while ((recipeBook.get(recipeIndex).getInstructions().length > currentStep) && in.nextLine().isEmpty() ){
+                    System.out.println(recipeBook.get(recipeIndex).getInstructions()[currentStep]);
+                    currentStep++;
+                }
+                System.out.println("End of recipe instructions. Type 'm' or 'menu'");
+
             }
 
             // search recipe
