@@ -182,7 +182,7 @@ public class RecipeBook {
                 recipeBook = new ArrayList<Recipe>();
 
                 // reading again because of the new updates
-                read_Json("src/Recipes.json");
+                read_json("src/Recipes.json");
             }
 
         }
