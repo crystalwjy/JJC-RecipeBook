@@ -130,10 +130,12 @@ public class RecipeBook {
                 while(true){
                     try {
                         searchIndex = Integer.parseInt(number) - 1;
+
                         //print entire recipe
                         for (Recipe r: recipeBook) {
                             if (r.getName().equals(resultList.get(searchIndex).getString())) {
                                 r.printAll();
+                                recipeIndex = recipeBook.indexOf(r);
                             }
                         }
                         System.out.println("Bon Appetit! Type 'v' to view instructions or 'm' to return to menu.");
