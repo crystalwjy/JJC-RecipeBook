@@ -16,8 +16,8 @@ import javax.swing.*;
 
 public class RecipeBook {
     public static ArrayList<Recipe> recipeBook=new ArrayList<Recipe>();
-    private JButton startButton;
-    private JPanel panelMain;
+    //private JButton startButton;
+    //private JPanel panelMain;
 
     public static void main(String[] args) throws Exception {
         read_json("Recipes.json");
@@ -35,20 +35,21 @@ public class RecipeBook {
             System.out.println(name);
         }
          */
+        // current recipe being read
+        int recipeIndex = 1000;
 
+        // current step in ingredients
+        int currentStep = 0;
 
         // user input in terminal (could try transferring this in a window using swing or javafx
         Scanner in = new Scanner(System.in);
+
         System.out.println("Welcome to your Recipe Book! Type 'm' or 'menu' to go to main menu");
 
         while (true){
             String input = in.nextLine();
 
-            // current recipe being read
-            int recipeIndex = 1000;
 
-            // current step in ingredients
-            int currentStep = 0;
 
             // menu
             if (input.equals("m") || input.equals("menu")){
